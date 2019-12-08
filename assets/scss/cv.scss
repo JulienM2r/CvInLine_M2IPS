@@ -1,0 +1,31 @@
+// assets/css/global.scss
+
+// customize some Bootstrap variables
+$primary: darken(#428bca, 20%);
+
+// the ~ allows you to reference things in node_modules
+@import "~bootstrap/scss/bootstrap";
+
+.container-fluid {
+    padding-top: 70px;
+    padding-bottom: 70px;
+    }
+p {
+	font-size: 16px;
+	}
+.margin {
+	margin-bottom: 45px;
+	}
+.bg-1 {
+	background-color: #1abc9c; /* Green */
+	color: #ffffff;
+	}
+.navbar {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border: 0;
+    border-radius: 0;
+    margin-bottom: 0;
+    font-size: 12px;
+    letter-spacing: 5px;
+  	}

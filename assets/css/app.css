@@ -1,0 +1,20 @@
+body {
+    background-color: rgb(255,0,255);
+
+}
+
+.fakeimg {
+    height: 200px;
+    background: #aaa;
+  }
+
+.container-fluid {
+    padding-top: 70px;
+    padding-bottom: 70px;
+
+p {font-size: 16px;}
+  .margin {margin-bottom: 45px;}
+  .bg-1 { 
+    background-color: #1abc9c; /* Green */
+    color: #ffffff;
+  }
