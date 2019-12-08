@@ -31,7 +31,7 @@ class RegistrationController extends AbstractController
 
             // 3) Encode the password (you could also do this via Doctrine listener)
             $cv = new CV();
-            dump($form->get('email')->getData());
+            //dump($form->get('email')->getData());
             $dayto = new \DateTime() ;
             $user->setEmail($form->get('email')->getData());
             $user->setFirstname($form->get('Firstname')->getData());

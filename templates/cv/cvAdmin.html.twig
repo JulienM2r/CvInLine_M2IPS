@@ -1,0 +1,272 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre CV!{% endblock %}
+
+{% block body %}
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+  <a class="navbar-brand" href="#">Me</a>
+
+  
+  <ul class="nav navbar-nav nav">
+    <li class="nav-item">
+      <a class="nav-link" href="#">Formations</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Experiences</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Projets</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Hobbies</a>
+    </li>    
+    <li class="nav-item">
+      <a class="nav-link" href="#">Contact</a>
+    </li>
+    <li class="nav-item mr-auto"=>
+      {% if app.user %}
+      <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+      {% else %}      
+      <a class="nav-link" href="{{ path('app_login') }}">Login</a>
+      {% endif %}
+
+    </li>
+
+  </ul>
+    
+</nav>
+
+
+
+
+<!-- BlocMessage Container -->
+<div class="container-fluid bg-2 text-right" id="BlocMessage"> 
+  <div class="row">
+    <div class="col-sm-8">
+      <h4>{% if msg %}{{ msg }}{% endif %}</h4>
+    </div>
+    <div class="col-sm-4">
+      <a class="btn btn-primary btn-lg" name="btnMessage" id="btnMessage">
+        <i class="fa fa-users" ></i> Ok
+      </a>
+    </div>
+  </div>
+  
+    
+
+</div>
+<!-- Me Container -->
+<div class="container-fluid bg-1 text-center" name="Me">
+	<div class="row">
+		<div class="col-sm-8">	
+			<div class="jumbotron text-center" style="margin-bottom:0">
+			    <h1>{{ cv.Titre }}  <small>{% if cv.getNivExp() %}"{{ cv.getNivExp().getName()}}"{% endif %}</small></h1>
+			    <h2>{{ cv.getUser().getLastname()}}  <small>{{ cv.getUser().getFirstname()}}</small></h2>
+			    <h3>{{cv.Age}} ans</h3>
+          <a class="btn btn-primary btn-lg" name="btnModifCVHead" id="btnMessage">
+            <i class="fa fa-users" ></i> Modifier
+          </a>		    
+			</div>
+		</div>
+		<div class="col-sm-4">			
+		    <div class="fakeimg">
+		    	<img src="{{asset('build/images/')}}{{cv.photoavatar}}" class="img-responsive margin" style="width:60%" alt="Image">
+		    	<blockquote class="blockquote-reverse">
+		    		<p class="font-italic">{{cv.getTextePhoto()}}</p>
+		   		</blockquote>
+		    </div>
+		</div>
+	</div>
+  <div class="row">
+    <div class="col-sm-12">
+      {% for res in cv.getResSoc()%}  
+        <a href="{{res.getLien()}}" target="_blank">
+        <img  src="{{asset('build/images/')}}{{res.getLogo()}}" class="img-responsive margin" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:65px; height:65px; margin-top:3px;" allowTransparency="true" alt="Image" >         
+        </a>
+      {% endfor %}
+    </div>
+</div>
+<!-- Formations Container -->
+<div class="container-fluid bg-4 text-center" name="Formations">
+  <div class="row">
+    <div class="col-sm-8">
+      <h3 class="margin">Formations Scolaires :</h3>
+    </div>
+    <div class="col-sm-4">
+      <a class="btn btn-primary btn-lg" name="btnAjoutFormation" id="btnAjoutFormation" href="{{ path('addformations', { 'slug': cv.getUser().getUsername()}) }}">
+        <i class="fa fa-users" ></i> Ajouter
+      </a>
+    </div>  
+  </div>  
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+
+    <!-- Indicators -->
+    <ul class="carousel-indicators">
+      {% for i in cv.getFormations()|length %}
+      <li data-target="#myCarousel" data-slide-to="{{i}}" class="active"></li>
+      {% endfor %}
+    </ul>
+    
+    <!-- The slideshow -->
+    <div class="carousel-inner">
+      
+      <div class="carousel-item active">
+      
+      {% for formation in cv.getFormations()|slice(0,1) %}
+      
+        <div class="col-sm-12">
+          
+          <div class="row">
+            <div class="col-sm-8">
+              <h2><strong>{{ formation.getName() }}</strong></h2>
+            </div>
+            <div class="col-sm-4">
+              <h4>{{ formation.getDateDebut() }} / {{ formation.getDateFin() }}</h4>
+              <h4>{{ formation.getEcole() }}</h4>
+            </div>            
+          </div>
+          <!-- <h4>{{ formation.getNiveau() }}</h4> -->
+          <p class="font-italic">{{ formation.getDescription() }}</p>
+          <a class="btn btn-primary btn-lg" name="btnModifForm{{formation.getId()}}" id="btnModifForm">
+            <i class="fa fa-users" ></i> Modifier
+          </a>
+        </div>
+      {% endfor %}
+        </div>
+        
+      
+      
+      {% for formation in cv.getFormations()|slice(1,cv.getFormations()|length) %}
+      <div class="carousel-item">  
+        <div class="col-sm-12">          
+          <div class="row">
+            <div class="col-sm-8">
+              <h2><strong>{{ formation.getName() }}</strong></h2>
+            </div>
+            <div class="col-sm-4">
+              <h4>{{ formation.getDateDebut() }} / {{ formation.getDateFin() }}</h4>
+              <h4>{{ formation.getEcole() }}</h4>
+            </div>
+          </div>            
+          <div class="col-sm-8">
+            <p class="font-italic">{{ formation.getDescription() }}</p>
+          </div>
+          <a class="btn btn-primary btn-lg" name="btnModifForm{{formation.getId()}}" id="btnModifForm">
+            <i class="fa fa-users" ></i> Modifier
+          </a>
+        </div>
+          <!-- <h4>{{ formation.getNiveau() }}</h4> -->
+        
+      </div>
+      {% endfor %}      
+    </div>    
+  
+    <!-- Left and right controls -->
+    <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#myCarousel" data-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </a>
+  </div> 
+</div>
+
+<!-- Experiences Container (Grid) -->
+<div class="container-fluid bg-3 text-center" name="Experiences">    
+  <h3 class="margin">Expériences Professionnelles :</h3><br>
+  <div class="row">
+    {% for exp in cv.getExperiences() %}
+    <div class="col-sm-4">
+      <h2><strong>{{ exp.getName() }}</strong></h2>    
+      <h4>{{ exp.getDateDebut() }} / {{ exp.getDateFin() }}</h4>
+      <h4>{{ exp.getEntreprise() }}</h4>
+      <p class="font-italic">
+        {{ exp.getDescription() }}</br>
+        <!-- technos   -->     
+        {% if exp.getTechnos()|length > 0 %}
+        {% for tech in exp.getTechnos() %}        
+          <kbd>{{tech.getName()|join(' ')}}  </kbd>
+        {% endfor %}
+        </br>
+        {% endif %}
+        <!-- Framework -->
+        {% if exp.getFrameLog()|length > 0 %}
+        {% for fram in exp.getFrameLog() %}        
+          <kbd>{{fram.getName()}}  </kbd>
+        {% endfor %}
+        </br>
+        {% endif %}
+        <!-- Compétances -->
+        {% for comp in exp.getCompetances() %}        
+          <kbd>{{comp.getName()}}  </kbd>
+        {% endfor %}
+      </p>
+      <a class="btn btn-primary btn-lg" name="btnModifExp{{exp.getId()}}" id="btnModifExp" onclick="">
+            <i class="fa fa-users" ></i> Modifier
+          </a> 
+    </div>
+    {% endfor %}
+  </div>
+</div>
+<!-- Container Projets -->
+<div class="container-fluid bg-5 text-center" name="Projets">    
+  <h3 class="margin">Projets :</h3><br>
+  <div class="row">
+    {% for pjt in cv.getProjects() %}
+    <div class="col-sm-4">
+      <h2><strong>{{ pjt.getTitle() }}</strong></h2>
+      <p class="font-italic">
+        {{ pjt.getDescription() }}</br>
+        <!-- technos   -->     
+        {% if pjt.getTechnos()|length > 0 %}
+        {% for tech in pjt.getTechnos() %}        
+          <kbd>{{tech.getName()}}  </kbd>
+        {% endfor %}
+        </br>
+        {% endif %}
+        <!-- Framework -->
+         {% if pjt.getFrameworkLogiciel()|length > 0 %}
+        {% for fram in pjt.getFrameworkLogiciel() %}        
+          <kbd>{{fram.getName()}}  </kbd>
+        {% endfor %}
+        </br>
+        {% endif %}
+        <!-- Compétances -->
+        {% for comp in pjt.getCompetances() %}        
+          <kbd>{{comp.getName()}}  </kbd>
+        {% endfor %}
+      </p> 
+
+    </div>
+    {% endfor %}
+  </div>
+</div>
+<!-- Bloc Hobbies -->
+<div class="container-fluid bg-1 text-center" name="Hobbies">
+  <h3 class="margin">Hobbies :</h3><br>
+  <div class="row">
+    {% for hobbie in cv.getHobbies() %}
+    <div class="col-sm-4">  
+      <div class="jumbotron text-center" style="margin-bottom:0">
+        <div class="fakeimg">
+          <img src="{{asset('build/images/')}}{{hobbie.getLogo()}}" class="img-responsive margin" style="width:100%" alt="Image">
+          <blockquote class="blockquote-reverse">
+            <p class="font-italic">{{hobbie.getName()}}</p>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+    {% endfor %}    
+  </div>
+</div>     
+  
+  
+
+
+
+        
+  
+ 
+{% endblock %}

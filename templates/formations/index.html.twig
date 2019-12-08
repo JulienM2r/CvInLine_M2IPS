@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FormationsController!{% endblock %}
+{% block style %}
+.form-group {color: #f5f6f7; }
+{% endblock %}
+{% block body %}
+
+
+{# templates/formation/index.html.twig #}
+
+{{ form_start(form) }}
+	{{ form_row(form.name) }}
+    {{ form_row(form.Date_Debut) }}
+    {{ form_row(form.Date_Fin) }}
+    {{ form_row(form.ecole) }}
+    {{ form_row(form.niveau) }}
+    {{ form_row(form.description) }}
+    <ul class="tags">
+        {# iterate over each existing tag and render its only field: name #}
+        {% for tag in form.Categories %}
+            <li>{{ form_row(tag.name) }}</li>
+        {% endfor %}
+    </ul>
+
+    <button type="submit">Register!</button>
+{{ form_end(form) }}
+
+{% endblock %}

@@ -36,8 +36,8 @@ class CvAdminController extends AbstractController
                     	
                     }
             	               
-            	    return $this->render('cv/index.html.twig', [
-                        'controller_name' => 'CvAdminController', 'msg' => $msg, 'cv'=> $cv//, 'statut' => $converted_res
+            	    return $this->render('cv/cvAdmin.html.twig', [
+                        'controller_name' => 'CvAdminController','msg' => $msg, 'cv'=> $cv//, 'statut' => $converted_res
                     ]);
 
                 }
